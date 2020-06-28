@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eurus
+  labels:
+    app: eurus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eurus
+  template:
+    metadata:
+      labels:
+        app: eurus
+    spec:
+      containers:
+        - name: eurus
+          image: vuezee/eurus
+          ports:
+            - containerPort: 8100
+
+          env:
+            - name: POSTGRES_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: env-variables
+                  key: POSTGRES_USERNAME
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: env-variables
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: env-variables
+                  key: POSTGRES_HOST
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: env-variables
+                  key: POSTGRES_DB
+            - name: AWS_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: env-variables
+                  key: AWS_BUCKET
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: env-variables
+                  key: AWS_REGION
+            - name: AWS_PROFILE
+              valueFrom:
+                secretKeyRef:
+                  name: env-variables
+                  key: AWS_PROFILE
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: env-variables
+                  key: JWT_SECRET
+            - name: URL
+              valueFrom:
+                secretKeyRef:
+                  name: env-variables
+                  key: URL
